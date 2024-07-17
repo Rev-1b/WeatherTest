@@ -14,49 +14,33 @@
     <form class='inputForm' id="cityInput" method="post" action="{% url 'index' %}">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="search-button">+</button>
+        <button type="submit" class="search-button">Искать</button>
     </form>
 
     <div class="main-window">
-        <div class="current-city">{{ name }}</div>
+        <div class="current-city">{{ weather.name }}</div>
         <div class="temperature">
-            <h2>{{ temp }}°C</h2>
-            <div class="inline-image"><img src="{% static 'icons/'|add:weather_icon %}.png"/></div>
+            <h2>{{ weather.temp }}°C</h2>
+            <div class="inline-image"><img src="{% static 'icons/'|add:weather.weather_icon %}.png"/></div>
         </div>
 
         <div class="additional-info">
-            Время: {{ time }} <br>
-            Ощущается как: {{ feels_like }}°C <br>
-            Восход: {{ sunrise }}<br>
-            Закат: {{ sunset }}
+            Время: {{ weather.time }} <br>
+            Ощущается как: {{ weather.feels_like }}°C <br>
+            Восход: {{ weather.sunrise }}<br>
+            Закат: {{ weather.sunset }}
         </div>
         <div class="forecasts-section">
-            <div class="forecast">
-                <div class="text">
-                    --:-- <br>
-                    Temperature: -- <br>
-                    Feels like: --
+            {% for elem in forecast %}
+                <div class="forecast">
+                    <div class="text">
+                        {{ elem.time }} <br>
+                        Температура: {{ elem.temp }} <br>
+                        Ощущается как: {{ elem.feels_like }}
+                    </div>
+                    <div class="inline-image"><img src="{% static 'icons/'|add:elem.weather_icon %}.png"/></div>
                 </div>
-                <div class="inline-image"><img src="{% static 'icons/unknown.png' %}"/></div>
-            </div>
-
-            <div class="forecast">
-                <div class="text">
-                    --:-- <br>
-                    Temperature: -- <br>
-                    Feels like: --
-                </div>
-                <div class="inline-image"><img src="{% static 'icons/unknown.png' %}"/></div>
-            </div>
-
-            <div class="forecast">
-                <div class="text">
-                    --:-- <br>
-                    Temperature: -- <br>
-                    Feels like: --
-                </div>
-                <div class="inline-image"><img src="{% static 'icons/unknown.png' %}"/></div>
-            </div>
+            {% endfor %}
         </div>
 
     </div>

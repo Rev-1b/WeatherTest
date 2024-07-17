@@ -149,62 +149,6 @@ body {
 }
 
 
-/*.checkbox-round {*/
-/*    width: 1.3em;*/
-/*    height: 1.3em;*/
-/*    background-color: white;*/
-/*    border-radius: 50%;*/
-/*    vertical-align: middle;*/
-/*    border: 2px solid #ddd;*/
-/*    appearance: none;*/
-/*    -webkit-appearance: none;*/
-/*    outline: none;*/
-/*    cursor: pointer;*/
-/*    margin: 5px 5px 10px 5px;*/
-/*}*/
-
-.checkbox-round:checked {
-    background-color: #26344e;
-}
-
-/* Некое дерьмо с кнопками */
-
-.delete-button {
-    overflow: hidden;
-    position: relative;
-    border: none;
-    padding: 0;
-    width: 2em;
-    height: 2em;
-    border-radius: 50%;
-    background: transparent;
-    color: gray;
-    font: inherit;
-    text-indent: 100%;
-    cursor: pointer;
-
-    &:hover {
-        background: rgba(29, 161, 142, .1)
-    }
-
-    &:before, &:after {
-        position: absolute;
-        top: 15%;
-        left: calc(50% - .0625em);
-        width: .125em;
-        height: 70%;
-        border-radius: .125em;
-        transform: rotate(45deg);
-        background: currentcolor;
-        content: ''
-    }
-
-    &:after {
-        transform: rotate(-45deg);
-    }
-}
-
-
 .form-control {
     padding: 10px;
     border: 1px solid #ccc;
