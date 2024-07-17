@@ -53,11 +53,11 @@ class IndexView(View):
         city_name = 'Moscow'
         form = CityForm()
 
-        weather = get_city_info(city_name).json()
-        forecast = get_city_forecast(city_name).json()
+        weather = get_city_info(city_name)
+        forecast = get_city_forecast(city_name)
 
         return render(request, self.template_name, self.get_context_data(
-            form=form, weather=weather, forecast=forecast
+            form=form, weather=weather.json(), forecast=forecast.json()
         ))
 
     def post(self, request, *args, **kwargs):
@@ -65,8 +65,11 @@ class IndexView(View):
         if form.is_valid():
             city_name = form.cleaned_data['city_name']
 
-            weather = get_city_info(city_name).json()
-            forecast = get_city_forecast(city_name).json()
+            weather = get_city_info(city_name)
+            forecast = get_city_forecast(city_name)
+
+            if weather.status_code != 200 or forecast.status_code != 200:
+                return HttpResponseBadRequest('Неправильный город')
 
             user = request.user if request.user.is_authenticated else None
             city = self.get_queryset().create(name=city_name)
@@ -75,7 +78,7 @@ class IndexView(View):
                 user.cities.add(city)
 
             return render(request, self.template_name, self.get_context_data(
-                form=form, weather=weather, forecast=forecast
+                form=form, weather=weather.json(), forecast=forecast.json()
             ))
         return HttpResponseBadRequest('Неправильный город')
 

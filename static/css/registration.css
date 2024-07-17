@@ -1,0 +1,28 @@
+body {
+    background-image: url('../../img/login-backimage.jpg');
+}
+
+.obs-color {
+    background: linear-gradient(135deg, rgba(88, 31, 244, 1) 0%, rgba(88, 31, 244, 1) 2%, rgba(233, 60, 236, 1) 100%);
+    color: #0a53be;
+}
+
+.wrapper {
+        width: 720px;
+}
+
+.wrapper .login-link {
+    font-size: 14.5px;
+    text-align: center;
+    margin: 20px 0 15px;
+}
+
+.login-link a {
+    color: aliceblue;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
