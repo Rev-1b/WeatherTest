@@ -3,26 +3,75 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Погода сегодня</title>
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <title>Title</title>
 </head>
 <body>
-    <div class="weather-container">
-        <h1>Погода сегодня</h1>
-        <div class="weather-info">
-            <div class="weather-icon">
-                <img src="sun-icon.png" alt="Солнечно">
+
+<div class="center">
+
+    <form class='inputForm' id="cityInput" method="post" action="{% url 'index' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="search-button">+</button>
+    </form>
+
+    <div class="main-window">
+        <div class="current-city">{{ name }}</div>
+        <div class="temperature">
+            <h2>{{ temp }}°C</h2>
+            <div class="inline-image"><img src="{% static 'icons/'|add:weather_icon %}.png"/></div>
+        </div>
+
+        <div class="additional-info">
+            Время: {{ time }} <br>
+            Ощущается как: {{ feels_like }}°C <br>
+            Восход: {{ sunrise }}<br>
+            Закат: {{ sunset }}
+        </div>
+        <div class="forecasts-section">
+            <div class="forecast">
+                <div class="text">
+                    --:-- <br>
+                    Temperature: -- <br>
+                    Feels like: --
+                </div>
+                <div class="inline-image"><img src="{% static 'icons/unknown.png' %}"/></div>
             </div>
-            <div class="temperature">
-                <p>Сейчас: 25°C</p>
-                <p>Макс: 28°C</p>
-                <p>Мин: 20°C</p>
+
+            <div class="forecast">
+                <div class="text">
+                    --:-- <br>
+                    Temperature: -- <br>
+                    Feels like: --
+                </div>
+                <div class="inline-image"><img src="{% static 'icons/unknown.png' %}"/></div>
             </div>
-            <div class="description">
-                <p>Ясно, без осадков</p>
+
+            <div class="forecast">
+                <div class="text">
+                    --:-- <br>
+                    Temperature: -- <br>
+                    Feels like: --
+                </div>
+                <div class="inline-image"><img src="{% static 'icons/unknown.png' %}"/></div>
             </div>
         </div>
+
     </div>
+
+    <div class="prev-cities">
+        <h3 class="title">История запросов</h3>
+        {% if user.is_authenticated %}
+            <div class="cities-container"></div>
+        {% else %}
+            <div>Для того, чтобы видеть свою историю поиска, вам необходимо авторизоваться!</div>
+        {% endif %}
+    </div>
+</div>
+
+<script type="module" src="../js/main.js"></script>
+<script src="https://kit.fontawesome.com/c0b4b209ad.js" crossorigin="anonymous"></script>
 </body>
 </html>

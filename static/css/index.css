@@ -1,32 +1,228 @@
+img {
+    height: 56px;
+    width: 56px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.inline-image {
+    display: inline-block;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-}
-
-.weather-container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.weather-info {
     display: flex;
+    flex-flow: row nowrap;
     justify-content: space-around;
     align-items: center;
+    align-content: flex-start;
+    height: 100vh;
+    background: linear-gradient(135deg, #f7fbfc 0%, #d9edf2 40%, #add9e4 100%);
+
 }
 
-.weather-icon img {
-    width: 100px;
-    height: 100px;
+.center {
+    display: grid;
+    border: 2px solid;
+    text-align: center;
+    width: 500px;
+    grid-template-areas:
+        'input input'
+        'main-window prev-cities';
+    grid-template-columns: 1fr 1fr;
+}
+
+.inputForm {
+    border: 1px solid;
+    grid-area: input;
+}
+
+
+.addTask {
+
+}
+
+.main-window {
+    display: grid;
+    border: 1px solid;
+    grid-area: main-window;
+    grid-template-areas:
+            'current-city like-city'
+            'temperature temperature'
+            'additional-info additional-info'
+            'forecast-section forecast-section';
+
+
+    grid-template-columns: 1fr 50px;
+    grid-gap: 5px;
+
+}
+
+.current-city {
+    grid-area: current-city;
+    text-align: start;
+    padding-left: 20px;
+    font-size: 20px;
+}
+
+.like-button {
+    font-size: 20px;
+    grid-area: like-city;
+    background: transparent;
+    border: none;
+    margin-bottom: 15px;
+}
+
+.like-button:hover {
+    cursor: pointer;
 }
 
 .temperature {
+    display: flex;
+    font-size: 30px;
+    padding-left: 20px;
+    text-align: start;
+    grid-area: temperature;
+}
+
+
+.additional-info {
+    font-size: 20px;
+    text-align: start;
+    padding-left: 20px;
+    grid-area: additional-info;
+    border-bottom: 1px solid;
+}
+
+.forecasts-section {
+    grid-area: forecast-section;
+}
+
+
+.forecast {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid;
+    text-align: start;
+    padding-left: 40px;
+}
+
+.text {
+}
+
+.prev-cities {
+    border: 1px solid;
+    grid-area: prev-cities;
+}
+
+.title {
+    border-bottom: 2px solid;
+}
+
+
+.cities-container {
+    overflow: hidden;
+}
+
+.city {
+    display: flex;
+    justify-content: space-between;
+    padding: 2px;
+    border-bottom: 1px solid;
+}
+
+.taskName {
     text-align: left;
 }
 
-.description {
-    font-style: italic;
+
+/* - -------------- -- - -- - - -----*/
+
+
+.task-active {
+    background: linear-gradient(135deg, #a9e4f7 0%, #0fb4e7 100%);
+}
+
+.task-unactive {
+    background: linear-gradient(135deg, #b5bdc8 0%, #828c95 36%, #28343b 100%);
+    color: aliceblue;
+    text-shadow: 1px 1px #28343b;
+}
+
+
+/*.checkbox-round {*/
+/*    width: 1.3em;*/
+/*    height: 1.3em;*/
+/*    background-color: white;*/
+/*    border-radius: 50%;*/
+/*    vertical-align: middle;*/
+/*    border: 2px solid #ddd;*/
+/*    appearance: none;*/
+/*    -webkit-appearance: none;*/
+/*    outline: none;*/
+/*    cursor: pointer;*/
+/*    margin: 5px 5px 10px 5px;*/
+/*}*/
+
+.checkbox-round:checked {
+    background-color: #26344e;
+}
+
+/* Некое дерьмо с кнопками */
+
+.delete-button {
+    overflow: hidden;
+    position: relative;
+    border: none;
+    padding: 0;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    background: transparent;
+    color: gray;
+    font: inherit;
+    text-indent: 100%;
+    cursor: pointer;
+
+    &:hover {
+        background: rgba(29, 161, 142, .1)
+    }
+
+    &:before, &:after {
+        position: absolute;
+        top: 15%;
+        left: calc(50% - .0625em);
+        width: .125em;
+        height: 70%;
+        border-radius: .125em;
+        transform: rotate(45deg);
+        background: currentcolor;
+        content: ''
+    }
+
+    &:after {
+        transform: rotate(-45deg);
+    }
+}
+
+
+.form-control {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 200px;
+}
+
+.search-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #45a049;
 }
