@@ -17,14 +17,13 @@ body {
     align-content: flex-start;
     height: 100vh;
     background: linear-gradient(135deg, #f7fbfc 0%, #d9edf2 40%, #add9e4 100%);
-
 }
 
 .center {
     display: grid;
     border: 2px solid;
     text-align: center;
-    width: 500px;
+    width: 560px;
     grid-template-areas:
         'input input'
         'main-window prev-cities';
@@ -34,12 +33,10 @@ body {
 .inputForm {
     border: 1px solid;
     grid-area: input;
+    display: flex;
+    align-items: center;
 }
 
-
-.addTask {
-
-}
 
 .main-window {
     display: grid;
@@ -61,7 +58,8 @@ body {
     grid-area: current-city;
     text-align: start;
     padding-left: 20px;
-    font-size: 20px;
+    padding-top: 10px;
+    font-size: 22px;
 }
 
 .like-button {
@@ -103,24 +101,21 @@ body {
     justify-content: space-between;
     border-bottom: 1px solid;
     text-align: start;
-    padding-left: 40px;
+    padding-left: 20px;
 }
 
-.text {
-}
 
 .prev-cities {
     border: 1px solid;
     grid-area: prev-cities;
 }
 
-.title {
-    border-bottom: 2px solid;
-}
-
 
 .cities-container {
+    border-top: 1px solid;
     overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 .city {
@@ -130,43 +125,60 @@ body {
     border-bottom: 1px solid;
 }
 
-.taskName {
-    text-align: left;
-}
-
-
 /* - -------------- -- - -- - - -----*/
 
+.full-width-button {
+    display: block;
+    width: 100%;
+    background-color: #8090aa;
+    color: black; /* Цвет текста */
+    padding: 10px; /* Поля внутри кнопки */
+    border: 1px solid black; /* Черная обводка */
 
-.task-active {
-    background: linear-gradient(135deg, #a9e4f7 0%, #0fb4e7 100%);
-}
-
-.task-unactive {
-    background: linear-gradient(135deg, #b5bdc8 0%, #828c95 36%, #28343b 100%);
-    color: aliceblue;
-    text-shadow: 1px 1px #28343b;
-}
-
-
-.form-control {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    width: 200px;
-}
-
-.search-button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    text-align: center; /* Выравнивание текста по центру */
     cursor: pointer;
 }
 
-.search-button:hover {
-    background-color: #45a049;
+.full-width-button:hover {
+    background-color: #405d67;
+}
+
+
+.input-container {
+    display: flex;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.input-box {
+    flex: 1;
+}
+
+.city-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-right: none; /* Remove right border to connect with button */
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #48b5b3;
+    color: white;
+    border: 1px solid #000000;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #296a69;
+}
+
+.input-error {
+    color: red;
+    margin-top: 5px;
 }

@@ -44,7 +44,9 @@ class IndexView(View):
             context['forecast'].append(result)
 
         if self.request.user.is_authenticated:
-            context['cities'] = self.get_queryset().filter(user=self.request.user)
+            context['cities'] = self.get_queryset().filter(
+                user=self.request.user).values('name').distinct()[:10]
+
             context['is_authenticated'] = True
 
         return context
