@@ -46,7 +46,7 @@ class IndexView(View):
 
         if self.request.user.is_authenticated:
             context['cities'] = self.get_queryset().filter(
-                user=self.request.user).values('name').distinct()[:40]
+                user=self.request.user).order_by('-updated_at')[:20]
 
         return context
 
@@ -73,7 +73,11 @@ class IndexView(View):
                 return HttpResponseBadRequest('Неправильный город')
 
             user = request.user if request.user.is_authenticated else None
-            city = self.get_queryset().create(name=city_name)
+            city, created = self.get_queryset().get_or_create(name=city_name)
+
+            if not created:
+                city.searched += 1
+                city.save()
 
             if user is not None:
                 user.cities.add(city)

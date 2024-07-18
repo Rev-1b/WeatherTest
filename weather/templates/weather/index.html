@@ -8,10 +8,24 @@
     <title>WeatherApp</title>
 </head>
 <body>
-
 <div class="center">
+    <div class="navbar">
+        <div>
+            <a href="{% url 'index' %}">Статистика</a>
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background:none;border:none;color:white;cursor:pointer;padding:10px;">
+                        Выйти
+                    </button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a>
+            {% endif %}
+        </div>
+    </div>
 
-    <form class='inputForm' id="cityInput" method="post" action="{% url 'index' %}">
+    <form class='inputForm' id="cityInput" method="post">
         {% csrf_token %}
         <div class="input-container">
             <div class="input-box">{{ form.city_name }}</div>
@@ -62,7 +76,8 @@
                 {% endfor %}
             </div>
         {% else %}
-            <div>Для того, чтобы видеть свою историю поиска, вам необходимо <a href="{% url 'register' %}">авторизоваться</a>!
+            <div>Для того, чтобы видеть свою историю поиска, вам необходимо <a
+                    href="{% url 'login' %}">авторизоваться</a>!
             </div>
         {% endif %}
     </div>

@@ -1,28 +1,52 @@
-body {
-    background-image: url('../../img/login-backimage.jpg');
-}
-
-.obs-color {
-    background: linear-gradient(135deg, rgba(88, 31, 244, 1) 0%, rgba(88, 31, 244, 1) 2%, rgba(233, 60, 236, 1) 100%);
-    color: #0a53be;
-}
-
-.wrapper {
-        width: 720px;
-}
-
-.wrapper .login-link {
-    font-size: 14.5px;
-    text-align: center;
-    margin: 20px 0 15px;
-}
-
-.login-link a {
-    color: aliceblue;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.login-link a:hover {
-    text-decoration: underline;
-}
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .register-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .register-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .register-container form {
+            display: flex;
+            flex-direction: column;
+        }
+        .register-container form .form-field {
+            margin-bottom: 15px;
+        }
+        .register-container form .form-field label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .register-container form .form-field input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .register-container form button {
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .register-container form button:hover {
+            background-color: #45a049;
+        }

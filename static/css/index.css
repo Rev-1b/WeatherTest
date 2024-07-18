@@ -26,9 +26,10 @@ body {
     width: 560px;
     grid-template-areas:
         'input input'
-        'main-window prev-cities';
+        'main-window prev-cities'
+        'navbar navbar';
     grid-template-columns: 1fr 1fr;
-    background: radial-gradient(ellipse at center, #fff0e7 0%,#e0cdba 100%);
+    background: radial-gradient(ellipse at center, #fff0e7 0%, #e0cdba 100%);
 
 
 }
@@ -186,4 +187,27 @@ body {
 .input-error {
     color: red;
     margin-top: 5px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    grid-area: navbar;
+    border: 2px solid;
+}
+
+.navbar a {
+    text-decoration: none;
+    padding: 10px;
+    transition: background-color 0.3s;
+}
+
+.navbar a:hover {
+    background-color: #575757;
+}
+
+.container {
+    padding: 20px;
 }
