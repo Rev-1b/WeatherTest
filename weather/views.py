@@ -20,6 +20,7 @@ class IndexView(View):
         weather = kwargs.get('weather')
         forecast = kwargs.get('forecast')
         form = kwargs.get('form')
+        city_name = kwargs.get('name')
         context = {
             'form': form,
             'weather': {
@@ -29,7 +30,7 @@ class IndexView(View):
                 'time': get_current_time(weather['timezone']),
                 'sunrise': convert_unix_to_local(weather['sys']['sunrise'], weather['timezone']),
                 'sunset': convert_unix_to_local(weather['sys']['sunset'], weather['timezone']),
-                'name': weather['name'], 'is_authenticated': False,
+                'name': city_name,
             },
             'forecast': [],
         }
@@ -45,21 +46,19 @@ class IndexView(View):
 
         if self.request.user.is_authenticated:
             context['cities'] = self.get_queryset().filter(
-                user=self.request.user).values('name').distinct()[:10]
-
-            context['is_authenticated'] = True
+                user=self.request.user).values('name').distinct()[:40]
 
         return context
 
     def get(self, request):
-        city_name = 'Moscow'
+        city_name = 'Москва'
         form = CityForm()
 
         weather = get_city_info(city_name)
         forecast = get_city_forecast(city_name)
 
         return render(request, self.template_name, self.get_context_data(
-            form=form, weather=weather.json(), forecast=forecast.json()
+            form=form, weather=weather.json(), forecast=forecast.json(), name=city_name
         ))
 
     def post(self, request, *args, **kwargs):
@@ -80,7 +79,7 @@ class IndexView(View):
                 user.cities.add(city)
 
             return render(request, self.template_name, self.get_context_data(
-                form=form, weather=weather.json(), forecast=forecast.json()
+                form=form, weather=weather.json(), forecast=forecast.json(), name=city_name
             ))
         return HttpResponseBadRequest('Неправильный город')
 

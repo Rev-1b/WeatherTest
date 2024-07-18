@@ -28,6 +28,9 @@ body {
         'input input'
         'main-window prev-cities';
     grid-template-columns: 1fr 1fr;
+    background: radial-gradient(ellipse at center, #fff0e7 0%,#e0cdba 100%);
+
+
 }
 
 .inputForm {
@@ -113,9 +116,8 @@ body {
 
 .cities-container {
     border-top: 1px solid;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
+    height: 394px;
+    overflow: auto;
 }
 
 .city {
@@ -130,17 +132,19 @@ body {
 .full-width-button {
     display: block;
     width: 100%;
-    background-color: #8090aa;
+    background: radial-gradient(ellipse at center, #fff2e7 0%, #e6d1b4 100%);
+
     color: black; /* Цвет текста */
     padding: 10px; /* Поля внутри кнопки */
     border: 1px solid black; /* Черная обводка */
 
     text-align: center; /* Выравнивание текста по центру */
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .full-width-button:hover {
-    background-color: #405d67;
+    background: radial-gradient(ellipse at center, #ffebda 0%, #c5ac8b 100%);
 }
 
 
@@ -164,18 +168,19 @@ body {
     box-sizing: border-box;
 }
 
-button[type="submit"] {
+.input-container button {
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #48b5b3;
-    color: white;
+    background: radial-gradient(ellipse at center, #f6ddc1 0%, #f6c697 47%, #efb078 100%);
+    /*background-color: #48b5b3;*/
+    color: black;
     border: 1px solid #000000;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: 0.3s;
 }
 
-button[type="submit"]:hover {
-    background-color: #296a69;
+.input-container button:hover {
+    background: radial-gradient(ellipse at center, #fbd5ab 0%, #fdb977 47%, #fba556 100%);
 }
 
 .input-error {
