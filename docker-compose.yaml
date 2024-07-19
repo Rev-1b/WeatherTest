@@ -1,0 +1,35 @@
+services:
+  backend:
+    build:
+      context: .
+    container_name: weather
+    ports:
+      - 8000:8000
+    env_file:
+      - ./.env
+#    environment:
+#      - DB_HOST=database
+#      - DB_NAME=employment
+#      - DB_USER=observer_user
+#      - DB_PASSWORD=qwerty2F
+    volumes:
+      - .:/backend
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+
+#    depends_on:
+#      - database
+
+#  database:
+#    image: postgres
+#    restart: always
+#    ports:
+#      - 5432:5432
+#    environment:
+#      POSTGRES_DB: employment
+#      POSTGRES_USER: observer_user
+#      POSTGRES_PASSWORD: qwerty2F
+#
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
