@@ -12,17 +12,21 @@
     <h2>Авторизация</h2>
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
+        {{ form.non_field_errors }}
         <div class="form-field">
             <label for="id_username">Имя пользователя</label>
-            {{ form.username }}
+            <div class="input-box">{{ form.username }}</div>
+            <div class="input-error">{{ form.username.errors }}</div>
+
         </div>
         <div class="form-field">
             <label for="id_password">Пароль</label>
-            {{ form.password }}
+            <div class="input-box">{{ form.password }}</div>
+            <div class="input-error">{{ form.password.errors }}</div>
         </div>
         <button type="submit">Войти</button>
     </form>
-    <a href="{% url 'register' %}">Зарегистрироваться</a>
+    <div class="link"><a href="{% url 'register' %}">Зарегистрироваться</a></div>
 </div>
 </body>
 </html>

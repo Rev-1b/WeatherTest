@@ -11,21 +11,25 @@
     <h2>Регистрация</h2>
     <form method="post">
         {% csrf_token %}
+        {{ form.non_field_errors }}
         <div class="form-field">
             <label for="id_username">Имя пользователя</label>
-            {{ form.username }}
+            <div class="input-box">{{ form.username }}</div>
+            <div class="input-error">{{ form.username.errors }}</div>
         </div>
         <div class="form-field">
             <label for="id_password1">Пароль</label>
-            {{ form.password1 }}
+            <div class="input-box"> {{ form.password1 }}</div>
+            <div class="input-error">{{ form.password1.errors }}</div>
         </div>
         <div class="form-field">
             <label for="id_password2">Подтвердите пароль</label>
-            {{ form.password2 }}
+            <div class="input-box">{{ form.password2 }}</div>
+            <div class="input-error">{{ form.password2.errors }}</div>
         </div>
         <button type="submit">Зарегистрироваться</button>
     </form>
-        <a href="{% url 'login' %}">Авторизоваться</a>
+    <div class="link"><a href="{% url 'login' %}">Авторизоваться</a></div>
 </div>
 </body>
 </html>
