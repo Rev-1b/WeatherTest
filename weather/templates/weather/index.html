@@ -9,23 +9,7 @@
 </head>
 <body>
 <div class="center">
-    <div class="navbar">
-        <div>
-            <a href="{% url 'index' %}">Статистика</a>
-            {% if user.is_authenticated %}
-                <form method="post" action="{% url 'logout' %}" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" style="background:none;border:none;color:white;cursor:pointer;padding:10px;">
-                        Выйти
-                    </button>
-                </form>
-            {% else %}
-                <a href="{% url 'login' %}">Войти</a>
-            {% endif %}
-        </div>
-    </div>
-
-    <form class='inputForm' id="cityInput" method="post">
+    <form class='inputForm' id="inputForm" method="post">
         {% csrf_token %}
         <div class="input-container">
             <div class="input-box">{{ form.city_name }}</div>
@@ -33,6 +17,8 @@
             <button type="submit">Искать</button>
         </div>
     </form>
+
+    <div id="suggestions-container" class="autocomplete-suggestions"></div>
 
     <div class="main-window">
         <div class="current-city">{{ weather.name }}</div>
@@ -42,7 +28,7 @@
         </div>
 
         <div class="additional-info">
-            Время: {{ weather.time }} <br>
+            Время: <span id="timer">{{ weather.time }}</span><br>
             Ощущается как: {{ weather.feels_like }}°C <br>
             Восход: {{ weather.sunrise }}<br>
             Закат: {{ weather.sunset }}
@@ -81,7 +67,20 @@
             </div>
         {% endif %}
     </div>
-</div>
 
+    <div class="navbar">
+            <a href="{% url 'statistic' %}">Статистика</a>
+
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Выйти</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a>
+            {% endif %}
+    </div>
+</div>
 </body>
+<script src="{% static 'js/main.js' %}"></script>
 </html>

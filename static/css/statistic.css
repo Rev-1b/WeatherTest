@@ -1,0 +1,101 @@
+body {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: flex-start;
+    height: 100vh;
+    background: linear-gradient(135deg, #f7fbfc 0%, #d9edf2 40%, #add9e4 100%);
+}
+
+.center {
+    display: grid;
+    border: 2px solid;
+    text-align: center;
+    width: 560px;
+    grid-template-areas:
+        'input'
+        'main-window'
+        'navbar';
+    background: radial-gradient(ellipse at center, #fff0e7 0%, #e0cdba 100%);
+}
+
+.inputForm {
+    border: 1px solid;
+    grid-area: input;
+    display: flex;
+    align-items: center;
+}
+
+
+.main-window {
+    border: 1px solid;
+}
+
+.info {
+    display: flex;
+    font-size: 24px;
+    margin: 30px 0;
+    padding-left: 20px;
+    text-align: start;
+}
+
+
+/* - -------------- -- - -- - - -----*/
+
+.input-container {
+    display: flex;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.input-box {
+    flex: 1;
+}
+
+.city-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-right: none; /* Remove right border to connect with button */
+    box-sizing: border-box;
+}
+
+.input-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: radial-gradient(ellipse at center, #f6ddc1 0%, #f6c697 47%, #efb078 100%);
+    /*background-color: #48b5b3;*/
+    color: black;
+    border: 1px solid #000000;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.input-container button:hover {
+    background: radial-gradient(ellipse at center, #fbd5ab 0%, #fdb977 47%, #fba556 100%);
+}
+
+.input-error {
+    color: red;
+    margin-top: 5px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    grid-area: navbar;
+    border: 1px solid;
+}
+
+.navbar a {
+    text-decoration: none;
+    padding: 10px;
+}
+.container {
+    padding: 20px;
+}

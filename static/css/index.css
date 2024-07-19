@@ -26,6 +26,7 @@ body {
     width: 560px;
     grid-template-areas:
         'input input'
+        'autocomplete autocomplete'
         'main-window prev-cities'
         'navbar navbar';
     grid-template-columns: 1fr 1fr;
@@ -64,18 +65,6 @@ body {
     padding-left: 20px;
     padding-top: 10px;
     font-size: 22px;
-}
-
-.like-button {
-    font-size: 20px;
-    grid-area: like-city;
-    background: transparent;
-    border: none;
-    margin-bottom: 15px;
-}
-
-.like-button:hover {
-    cursor: pointer;
 }
 
 .temperature {
@@ -117,7 +106,7 @@ body {
 
 .cities-container {
     border-top: 1px solid;
-    height: 394px;
+    height: 392px;
     overflow: auto;
 }
 
@@ -195,19 +184,37 @@ body {
     align-items: center;
     padding: 10px 20px;
     grid-area: navbar;
-    border: 2px solid;
+    border: 1px solid;
 }
 
 .navbar a {
     text-decoration: none;
     padding: 10px;
-    transition: background-color 0.3s;
-}
-
-.navbar a:hover {
-    background-color: #575757;
 }
 
 .container {
     padding: 20px;
+}
+
+/*---------------------------------*/
+
+.autocomplete-suggestions {
+    margin-top: 43px;
+    margin-left: 2px;
+    border: 1px solid #e0e0e0;
+    border-top: none;
+    max-height: 150px;
+    overflow-y: auto;
+    background-color: #fff;
+    position: absolute;
+    z-index: 1000;
+}
+
+.autocomplete-suggestion {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.autocomplete-suggestion:hover {
+    background-color: #f0f0f0;
 }

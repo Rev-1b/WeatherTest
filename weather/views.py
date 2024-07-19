@@ -3,7 +3,7 @@ from datetime import datetime
 import pytz
 import requests
 from django.http import HttpResponseBadRequest
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 
 from weather.forms import CityForm
@@ -88,6 +88,38 @@ class IndexView(View):
         return HttpResponseBadRequest('Неправильный город')
 
 
+class StatisticView(View):
+    template_name = 'weather/statistic.html'
+
+    def get_queryset(self):
+        return CityModel.objects.all()
+
+    def get_context_data(self, **kwargs):
+        form = kwargs.get('form')
+        city_name = kwargs.get('name')
+        context = {
+            'form': form,
+            'searched': get_searched_amount(self.get_queryset(), city_name),
+            'name': city_name,
+        }
+        return context
+
+    def get(self, request):
+        city_name = 'Москва'
+        form = CityForm()
+        return render(request, self.template_name, self.get_context_data(
+            form=form, name=city_name
+        ))
+
+    def post(self, request, *args, **kwargs):
+        form = CityForm(request.POST)
+        if form.is_valid():
+            city_name = form.cleaned_data['city_name']
+            return render(request, self.template_name, self.get_context_data(
+                form=form, name=city_name
+            ))
+
+
 def get_current_time(offset_seconds):
     offset_hours = offset_seconds // 3600
     tz = pytz.FixedOffset(offset_hours * 60)
@@ -101,6 +133,12 @@ def convert_unix_to_local(unix_timestamp, offset_seconds):
 
     local_time = datetime.fromtimestamp(unix_timestamp, tz=tz)
     return local_time.strftime('%H:%M:%S')
+
+
+def get_searched_amount(queryset, city_name):
+    number = get_object_or_404(queryset, name=city_name).searched
+    ending = 'разa' if 2 <= number % 10 <= 4 and not 11 <= number % 100 <= 20 else 'раз'
+    return f'{number} {ending}'
 
 
 def get_city_info(city):
@@ -124,3 +162,5 @@ def get_city_forecast(city):
         'units': 'metric',
     }
     return requests.get(current_weather_url, params=params)
+
+

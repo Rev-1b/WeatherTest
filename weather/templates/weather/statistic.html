@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/statistic.css' %}">
+    <title>WeatherApp</title>
+</head>
+<body>
+<div class="center">
+    <form class='inputForm' id="cityInput2" method="post" action="{% url 'statistic' %}">
+        {% csrf_token %}
+        <div class="input-container">
+            <div class="input-box">{{ form.city_name }}</div>
+            <div class="input-error">{{ form.city_name.errors }}</div>
+            <button type="submit">Искать</button>
+        </div>
+    </form>
+
+    <div class="main-window">
+        <div class="info">
+            Всего город "{{ name }}" был в поиске {{ searched }}
+        </div>
+    </div>
+
+    <div class="navbar">
+        <a href="{% url 'index' %}">Главная</a>
+
+        {% if user.is_authenticated %}
+            <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Выйти</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Войти</a>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>
