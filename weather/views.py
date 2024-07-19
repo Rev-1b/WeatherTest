@@ -1,13 +1,15 @@
-from datetime import datetime
-
-import pytz
-import requests
+from django.db.models import F
 from django.http import HttpResponseBadRequest
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.views import View
 
+from utils.api_requests import get_city_info, get_city_forecast
+from utils.other import get_searched_amount
+from utils.time import get_current_time, convert_unix_to_local
 from weather.forms import CityForm
 from weather.models import CityModel
+
+from django.conf import settings
 
 
 class IndexView(View):
@@ -17,12 +19,16 @@ class IndexView(View):
         return CityModel.objects.all()
 
     def get_context_data(self, **kwargs):
+
         weather = kwargs.get('weather')
         forecast = kwargs.get('forecast')
         form = kwargs.get('form')
         city_name = kwargs.get('name')
+
+        # Put only the necessary information into the context from the server response
         context = {
             'form': form,
+            'error_message': kwargs.get('error_message', ''),
             'weather': {
                 'weather_icon': weather['weather'][0]['icon'],
                 'temp': round(weather['main']['temp']),
@@ -30,11 +36,12 @@ class IndexView(View):
                 'time': get_current_time(weather['timezone']),
                 'sunrise': convert_unix_to_local(weather['sys']['sunrise'], weather['timezone']),
                 'sunset': convert_unix_to_local(weather['sys']['sunset'], weather['timezone']),
-                'name': city_name,
+                'name': city_name,  # The city name matches what the user entered, not what was in the server response
             },
-            'forecast': [],
+            'forecast': [],  # Create a list for weather forecast objects in advance
         }
 
+        # Extract the necessary information from each forecast object
         for elem in forecast['list']:
             result = {
                 'time': convert_unix_to_local(elem['dt'], weather['timezone']),
@@ -44,6 +51,7 @@ class IndexView(View):
             }
             context['forecast'].append(result)
 
+        # If the user is not authorized, then there is no one to display the browsing history
         if self.request.user.is_authenticated:
             context['cities'] = self.get_queryset().filter(
                 user=self.request.user).order_by('-updated_at')[:20]
@@ -51,7 +59,7 @@ class IndexView(View):
         return context
 
     def get(self, request):
-        city_name = 'Москва'
+        city_name = settings.DEFAULT_CITY  # The city that will be displayed when you first visit the site
         form = CityForm()
 
         weather = get_city_info(city_name)
@@ -76,8 +84,9 @@ class IndexView(View):
             city, created = self.get_queryset().get_or_create(name=city_name)
 
             if not created:
-                city.searched += 1
-                city.save()
+                city.searched = F('searched') + 1
+                city.save(update_fields=['searched', 'updated_at'])
+                city.refresh_from_db()
 
             if user is not None:
                 user.cities.add(city)
@@ -105,7 +114,7 @@ class StatisticView(View):
         return context
 
     def get(self, request):
-        city_name = 'Москва'
+        city_name = settings.DEFAULT_CITY  # The city that will be displayed when you first visit the site
         form = CityForm()
         return render(request, self.template_name, self.get_context_data(
             form=form, name=city_name
@@ -118,49 +127,3 @@ class StatisticView(View):
             return render(request, self.template_name, self.get_context_data(
                 form=form, name=city_name
             ))
-
-
-def get_current_time(offset_seconds):
-    offset_hours = offset_seconds // 3600
-    tz = pytz.FixedOffset(offset_hours * 60)
-    current_time = datetime.now(tz)
-    return current_time.strftime('%H:%M:%S')
-
-
-def convert_unix_to_local(unix_timestamp, offset_seconds):
-    offset_hours = offset_seconds // 3600
-    tz = pytz.FixedOffset(offset_hours * 60)
-
-    local_time = datetime.fromtimestamp(unix_timestamp, tz=tz)
-    return local_time.strftime('%H:%M:%S')
-
-
-def get_searched_amount(queryset, city_name):
-    number = get_object_or_404(queryset, name=city_name).searched
-    ending = 'разa' if 2 <= number % 10 <= 4 and not 11 <= number % 100 <= 20 else 'раз'
-    return f'{number} {ending}'
-
-
-def get_city_info(city):
-    current_weather_url = 'http://api.openweathermap.org/data/2.5/weather'
-    api_key = '1600667aec76cc2ab680ca18f43b89c0'
-    params = {
-        'q': city,
-        'appid': api_key,
-        'units': 'metric',
-    }
-    return requests.get(current_weather_url, params=params)
-
-
-def get_city_forecast(city):
-    current_weather_url = 'http://api.openweathermap.org/data/2.5/forecast'
-    api_key = '1600667aec76cc2ab680ca18f43b89c0'
-    params = {
-        'q': city,
-        'appid': api_key,
-        'cnt': 3,
-        'units': 'metric',
-    }
-    return requests.get(current_weather_url, params=params)
-
-
