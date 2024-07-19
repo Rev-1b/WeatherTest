@@ -37,19 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'weather',
     'users',
-
-    "debug_toolbar",
-]
-
-INTERNAL_IPS = [
-    # ...
-    "127.0.0.1",
-    # ...
 ]
 
 MIDDLEWARE = [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
-
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

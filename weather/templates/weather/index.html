@@ -8,7 +8,7 @@
     <title>WeatherApp</title>
 </head>
 <body>
-<div class="center">
+<div class="{% if error_message %}center-2{% else %}center{% endif %}">
     <form class='inputForm' id="inputForm" method="post">
         {% csrf_token %}
         <div class="input-container">
@@ -20,33 +20,38 @@
 
     <div id="suggestions-container" class="autocomplete-suggestions"></div>
 
-    <div class="main-window">
-        <div class="current-city">{{ weather.name }}</div>
-        <div class="temperature">
-            <h2>{{ weather.temp }}°C</h2>
-            <div class="inline-image"><img src="{% static 'icons/'|add:weather.weather_icon %}.png"/></div>
+    {% if error_message %}
+        <div class="error-window">
+            {{ error_message }}
         </div>
+    {% else %}
+        <div class="main-window">
+            <div class="current-city">{{ name }}</div>
+            <div class="temperature">
+                <h2>{{ weather.temp }}°C</h2>
+                <div class="inline-image"><img src="{% static 'icons/'|add:weather.weather_icon %}.png"/></div>
+            </div>
 
-        <div class="additional-info">
-            Время: <span id="timer">{{ weather.time }}</span><br>
-            Ощущается как: {{ weather.feels_like }}°C <br>
-            Восход: {{ weather.sunrise }}<br>
-            Закат: {{ weather.sunset }}
-        </div>
-        <div class="forecasts-section">
-            {% for elem in forecast %}
-                <div class="forecast">
-                    <div class="text">
-                        {{ elem.time }} <br>
-                        Температура: {{ elem.temp }}°C <br>
-                        Ощущается как: {{ elem.feels_like }}°C
+            <div class="additional-info">
+                Время: <span id="timer">{{ weather.time }}</span><br>
+                Ощущается как: {{ weather.feels_like }}°C <br>
+                Восход: {{ weather.sunrise }}<br>
+                Закат: {{ weather.sunset }}
+            </div>
+            <div class="forecasts-section">
+                {% for elem in forecast %}
+                    <div class="forecast">
+                        <div class="text">
+                            {{ elem.time }} <br>
+                            Температура: {{ elem.temp }}°C <br>
+                            Ощущается как: {{ elem.feels_like }}°C
+                        </div>
+                        <div class="inline-image"><img src="{% static 'icons/'|add:elem.weather_icon %}.png"/></div>
                     </div>
-                    <div class="inline-image"><img src="{% static 'icons/'|add:elem.weather_icon %}.png"/></div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
-
-    </div>
+    {% endif %}
 
     <div class="prev-cities">
         <h3 class="title">История запросов</h3>
@@ -69,16 +74,16 @@
     </div>
 
     <div class="navbar">
-            <a href="{% url 'statistic' %}">Статистика</a>
+        <a href="{% url 'statistic' %}">Статистика</a>
 
-            {% if user.is_authenticated %}
-                <form method="post" action="{% url 'logout' %}" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit">Выйти</button>
-                </form>
-            {% else %}
-                <a href="{% url 'login' %}">Войти</a>
-            {% endif %}
+        {% if user.is_authenticated %}
+            <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Выйти</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Войти</a>
+        {% endif %}
     </div>
 </div>
 </body>

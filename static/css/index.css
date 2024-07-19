@@ -26,14 +26,32 @@ body {
     width: 560px;
     grid-template-areas:
         'input input'
-        'autocomplete autocomplete'
         'main-window prev-cities'
         'navbar navbar';
     grid-template-columns: 1fr 1fr;
     background: radial-gradient(ellipse at center, #fff0e7 0%, #e0cdba 100%);
-
-
 }
+
+.center-2 {
+    display: grid;
+    border: 2px solid;
+    text-align: center;
+    width: 560px;
+    grid-template-areas:
+        'input input'
+        'error-window prev-cities'
+        'navbar navbar';
+    grid-template-columns: 1fr 1fr;
+    background: radial-gradient(ellipse at center, #fff0e7 0%, #e0cdba 100%);
+}
+
+.error-window {
+    grid-area: error-window;
+    font-size: 26px;
+    color: red;
+    margin: 20px;
+}
+
 
 .inputForm {
     border: 1px solid;

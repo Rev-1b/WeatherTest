@@ -29,10 +29,11 @@ function updateTime(element) {
 // Находим элемент с временем
 let timeElement = document.getElementById('timer');
 
-setInterval(function () {
-    updateTime(timeElement);
-}, 1000);
-
+if (timeElement !== null) {
+    setInterval(function () {
+        updateTime(timeElement);
+    }, 1000);
+}
 /*
 -----------------------------------------------------------
 */

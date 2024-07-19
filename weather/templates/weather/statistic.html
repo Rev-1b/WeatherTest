@@ -17,11 +17,18 @@
             <button type="submit">Искать</button>
         </div>
     </form>
+    <div id="suggestions-container" class="autocomplete-suggestions"></div>
 
     <div class="main-window">
-        <div class="info">
-            Всего город "{{ name }}" был в поиске {{ searched }}
-        </div>
+        {% if error_message %}
+            <div class="error">
+                {{ error_message }}
+            </div>
+        {% else %}
+            <div class="info">
+                Всего город "{{ name }}" был в поиске {{ searched }}
+            </div>
+        {% endif %}
     </div>
 
     <div class="navbar">
@@ -37,6 +44,6 @@
         {% endif %}
     </div>
 </div>
-
+<script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
